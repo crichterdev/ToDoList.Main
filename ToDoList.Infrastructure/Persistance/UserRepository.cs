@@ -10,26 +10,16 @@ namespace ToDoList.Infrastructure.Persistance;
 
 public class UserRepository : IUserRepository
 {
-    private static readonly List<User> _users = new() 
-    {
-        new()
-        {
-            Id = Guid.NewGuid(),
-            FirstName = "Jorge",
-            LastName = "Wilstermann",
-            Email = "hola@test.com",
-            Password = "1234",
-        }
+    private readonly ApplicationDbContext _appDbContext;
 
-    };
-
-    public void Add(User user)
+    public UserRepository(ApplicationDbContext applicationDbContext)
     {
-        _users.Add(user);
+        _appDbContext = applicationDbContext;
+
     }
 
     public User? GetUserByEmail(string email)
     {
-        return _users.SingleOrDefault(u => u.Email == email);
+        return _appDbContext.User.SingleOrDefault(u => u.Email == email);
     }
 }

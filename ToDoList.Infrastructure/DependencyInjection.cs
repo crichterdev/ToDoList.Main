@@ -11,6 +11,7 @@ using ToDoList.Application.Common.Interfaces;
 using ToDoList.Infrastructure.Services;
 using ToDoList.Infrastructure.Persistance;
 using ToDoList.Domain.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList.Infrastructure;
 
@@ -21,6 +22,8 @@ public static class DependencyInjection
         ConfigurationManager configuration)
     {
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+        services.AddDbContext<ApplicationDbContext>(options =>
+  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<IUserRepository, UserRepository>();
