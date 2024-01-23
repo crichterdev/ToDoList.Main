@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToDoList.Application.Common.Interfaces;
+namespace ToDoList.Contracts.Tasks;
 
-public interface IDateTimeProvider
-{
-    DateTime UtcNow { get; }
-
-}
+public record TaskRequest(
+    string Title,
+    bool IsDone
+    );

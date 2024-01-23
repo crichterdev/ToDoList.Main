@@ -32,13 +32,17 @@ public class ApplicationDbContext : DbContext
         
         var seedData = LoadSeedData();
         modelBuilder.Entity<User>().HasData(seedData);
+        modelBuilder.Entity<Domain.Entities.Task>()
+            .ToTable(nameof(Domain.Entities.Task))
+            .Property(b => b.Title)
+            .IsRequired(); ;
     }
 
     private User LoadSeedData()
     {
         // Lee el archivo JSON y deserializa los datos
-        var json = File.ReadAllText("..\\ToDoList.Infrastructure\\seedData.json");        
-        return JsonConvert.DeserializeObject<User>(json);
+            var json = File.ReadAllText("..\\ToDoList.Infrastructure\\seedData.json");
+            return JsonConvert.DeserializeObject<User>(json);
     }
 
 }

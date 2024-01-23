@@ -5,11 +5,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using ToDoList.Application.Common.Interfaces.Authentication;
 using System.IdentityModel.Tokens.Jwt;
-using ToDoList.Application.Common.Interfaces;
 using Microsoft.Extensions.Options;
 using ToDoList.Domain.Entities;
+using ToDoList.Application.Interfaces;
+using ToDoList.Application.Interfaces.Common;
 
 namespace ToDoList.Infrastructure.Authentication;
 public class JwtTokenGenerator : IJwtTokenGenerator

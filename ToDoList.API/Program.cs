@@ -1,6 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using ToDoList.Application;
 using ToDoList.Infrastructure;
+using ToDoList.Infrastructure.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.MapInboundClaims = false;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "CRichter",
+        ValidAudience = "ToDoListUsers",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("tech-asessment-carlos-richter-rodriguez")),
+};
+ 
+});
 
 var app = builder.Build();
 
@@ -28,6 +53,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -49,11 +75,11 @@ static void ApplyMigrations(WebApplication app)
             
             dbContext.Database.EnsureCreated();
             dbContext.Database.Migrate();
-            Console.WriteLine("Migraciones aplicadas correctamente.");
+           
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al aplicar migraciones: {ex.Message}");
+            Console.WriteLine($"An Error ocurred while apliyng migration: {ex.Message}");
         }
     }
 }

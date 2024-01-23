@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ToDoList.Domain.Entities;
 
-namespace ToDoList.Application.Services;
+namespace ToDoList.Application.Interfaces;
 
-public record AuthenticationResult(
-   User User,
-   string Token
-   );
+public interface IJwtTokenGenerator
+{
+    string GenerateToken(User user);
+}

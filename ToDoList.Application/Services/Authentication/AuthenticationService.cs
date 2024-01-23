@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ToDoList.Application.Common.Interfaces.Authentication;
+using ToDoList.Application.Interfaces;
 using ToDoList.Domain.Entities;
 using ToDoList.Domain.Persistance;
 
-namespace ToDoList.Application.Services;
+namespace ToDoList.Application.Services.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {

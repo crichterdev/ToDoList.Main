@@ -1,12 +1,12 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Application.Services;
+using ToDoList.Application.Interfaces;
 using ToDoList.Contracts.Authentication;
 
 namespace ToDoList.API.Controllers;
 
-[Route("api/auth")]
+[Route("api/v1/auth")]
 [ApiController]
 public class AuthenticationController : ControllerBase
 {
