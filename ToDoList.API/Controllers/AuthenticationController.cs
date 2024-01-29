@@ -1,6 +1,5 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ToDoList.API.Utilities.Validators;
 using ToDoList.Application.Interfaces;
 using ToDoList.Contracts.Authentication;
 
@@ -19,6 +18,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
+    [ServiceFilter(typeof(ValidateLoginRequestFilter))]
     public IActionResult Login(LoginRequest request)
     {
         var authResult = _authenticationService.Login(

@@ -7,6 +7,7 @@ using ToDoList.Application.Interfaces;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
+using ToDoList.API.Utilities.Validators;
 
 namespace ToDoList.API.Controllers
 {
@@ -27,6 +28,7 @@ namespace ToDoList.API.Controllers
         /// <param name="taskRequest">new Task data</param>
         /// <returns>New task created.</returns>
         [HttpPost("add")]
+        [ServiceFilter(typeof(ValidateTaskRequestFilter))]
         public async Task<IActionResult> CreateTask([FromBody] TaskRequest taskRequest)
         {
             string? userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
@@ -52,6 +54,7 @@ namespace ToDoList.API.Controllers
         }
 
         [HttpPut("add")]
+        [ServiceFilter(typeof(ValidateTaskRequestFilter))]
         public async Task<IActionResult> UpdateTask([FromBody] TaskRequest taskRequest)
         {
             string? userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
@@ -64,6 +67,7 @@ namespace ToDoList.API.Controllers
         }
 
         [HttpPut("update/{taskId}")]
+        [ServiceFilter(typeof(ValidateTaskRequestFilter))]
         public async Task<IActionResult> UpdateTask([FromRoute] int taskId, [FromBody] TaskRequest updatedTask)
         {
             string? userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
