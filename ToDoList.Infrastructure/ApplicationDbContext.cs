@@ -38,11 +38,11 @@ public class ApplicationDbContext : DbContext
             .IsRequired(); ;
     }
 
-    private User LoadSeedData()
+    private List<User> LoadSeedData()
     {
         // Lee el archivo JSON y deserializa los datos
             var json = File.ReadAllText("..\\ToDoList.Infrastructure\\seedData.json");
-            return JsonConvert.DeserializeObject<User>(json);
+            return JsonConvert.DeserializeObject<List<User>>(json);
     }
 
 }

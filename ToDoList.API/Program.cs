@@ -49,7 +49,16 @@ builder.Services.AddAuthentication(options =>
  
 });
 
-// Validation
+// CORS configuration
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -68,6 +77,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Enable CORS
+app.UseCors();
+
 app.MapControllers();
 
 app.Run();
@@ -83,7 +95,7 @@ static void ApplyMigrations(WebApplication app)
         try
         {
             var dbContext = services.GetRequiredService<ApplicationDbContext>();
-            // Aplica migraciones
+            // Aply migraciones
             
             dbContext.Database.EnsureCreated();
             dbContext.Database.Migrate();
