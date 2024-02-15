@@ -10,6 +10,6 @@ public class TaskRequestValidator : AbstractValidator<TaskRequest>
         RuleFor(x => x.Title)
             .NotEmpty()
             .MaximumLength(100)
-            .MinimumLength(10);
+            .MinimumLength(4);
     }
 }
